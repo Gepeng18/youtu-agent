@@ -41,6 +41,14 @@ class ExecutorAgent:
         self.reflection_history = []
 
     # 执行分配的任务并检查结果
+    """
+    构建 prompts 调用 llm
+    1. executor.yaml 的 TASK_EXECUTE_USER_PROMPT 作为 user prompt
+    2. 失败重试时使用 TASK_EXECUTE_WITH_REFLECTION_USER_PROMPT
+    3. executor.yaml 的 TASK_CHECK_PROMPT 用于任务自检
+    4. executor.yaml 的 TASK_REFLECTION_PROMPT 用于失败反思
+    5. return_summary 时使用 TASK_SUMMARY_USER_PROMPT 生成摘要
+    """
     async def execute_task(
         self,
         recorder: WorkspaceTaskRecorder,

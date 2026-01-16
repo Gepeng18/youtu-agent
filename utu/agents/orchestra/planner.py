@@ -116,7 +116,6 @@ class PlannerAgent:
         return self.config.planner_config.get("name", "planner")
 
     # 创建任务执行计划
-    # 创建任务执行计划
     async def create_plan(self, task_recorder: OrchestraTaskRecorder) -> CreatePlanResult:
         # format examples to string. example: {question, available_agents, analysis, plan}
         # 将示例格式化为字符串。示例格式：{question, available_agents, analysis, plan}

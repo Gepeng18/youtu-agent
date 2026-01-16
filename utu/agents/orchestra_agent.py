@@ -87,7 +87,7 @@ class OrchestraAgent:
                 # 第一步：规划阶段
                 await self.plan(task_recorder)
 
-                # 第二步：依次执行每个子任务
+                # 【循环】第二步：依次执行每个子任务
                 for task in task_recorder.plan.todo:
                     # print(f"> processing {task}")
                     # 获取对应的worker代理并构建
@@ -118,7 +118,11 @@ class OrchestraAgent:
                 raise e
 
     # 第一步：规划阶段，为任务创建执行计划
-    # 第一步：规划阶段
+    """
+    构建prompts，调用llm
+    1. 将 planner.yaml 中的 PLANNER_SP 作为 system prompt
+    2. 将 planner.yaml 中的 PLANNER_UP 作为 user prompt
+    """
     async def plan(self, task_recorder: OrchestraTaskRecorder) -> CreatePlanResult:
         """Step1: Plan"""
         # 调用规划者代理创建执行计划
@@ -145,7 +149,10 @@ class OrchestraAgent:
         return result
 
     # 第三步：报告阶段，汇总分析所有执行结果
-    # 第三步：报告阶段
+    """
+    构建prompts，调用llm
+    将 reporter_sp.j2 作为 user prompt
+    """
     async def report(self, task_recorder: OrchestraTaskRecorder) -> AnalysisResult:
         """Step3: Report"""
         # 调用报告者代理生成分析报告

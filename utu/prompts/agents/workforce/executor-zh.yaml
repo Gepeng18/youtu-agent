@@ -1,0 +1,124 @@
+TASK_EXECUTE_USER_PROMPT: |
+  现在请完成你的任务（注意：你无法请求用户确认或帮助，请直接完成任务，无需询问或确认）：
+
+  <overall_task>
+  {overall_task}
+  </overall_task>
+
+  <overall_plan_to_solve_the_task>
+  {overall_plan}
+  </overall_plan_to_solve_the_task>
+
+  <current_subtask>
+  <task_name>
+  {task_name}
+  </task_name>
+
+  <task_description>
+  {task_description}
+  </task_description>
+  </current_subtask>
+
+  注意：总体任务是 <overall_task>，你当前正在处理子任务 <current_subtask>。请专注于完成此特定子任务，同时牢记总体目标。
+
+TASK_EXECUTE_WITH_REFLECTION_USER_PROMPT: |
+  你之前未能完成此任务。现在请根据失败经验重试（注意：你无法请求用户确认或帮助，请直接完成任务，无需询问或确认）：
+
+  <overall_task>
+  {overall_task}
+  </overall_task>
+
+  <overall_plan_to_solve_the_task>
+  {overall_plan}
+  </overall_plan_to_solve_the_task>
+
+  <current_subtask>
+  <task_name>
+  {task_name}
+  </task_name>
+
+  <task_description>
+  {task_description}
+  </task_description>
+  </current_subtask>
+
+  <previous_attempts_and_reflections>
+  {previous_attempts}
+  </previous_attempts_and_reflections>
+
+  注意：总体任务是 <overall_task>，你当前正在处理子任务 <current_subtask>。基于上述反思，分析先前尝试的失败原因，找出问题所在，并探索成功完成此子任务的正确路径。利用吸取的教训改进你的方法，避免重复同样的错误。
+
+TASK_CHECK_PROMPT: |
+  请仔细评估你是否已成功完成指定任务。
+
+  <task_name>
+  {task_name}
+  </task_name>
+
+  <task_description>
+  {task_description}
+  </task_description>
+
+  首先，通过考虑以下几点来反思你的工作：
+  1. 此任务的具体目标是什么？
+  2. 你采取了什么行动来处理此任务？
+  3. 你产生了什么结果或输出？
+  4. 你的结果是否完全满足任务要求？
+  5. 是否还有剩余步骤或方面需要完成？
+
+  根据你的反思，确定任务是否已完全结束。只有当所有要求都已完全满足且不再需要进一步操作时，任务才被视为完成。
+
+  请提供你的分析，然后使用 <task_check> 标签回答 'yes' 或 'no'：
+  - 如果任务未完全完成，输出 <task_check>no</task_check>
+  - 如果任务已完全完成，输出 <task_check>yes</task_check>
+
+TASK_REFLECTION_PROMPT: |
+  你尝试完成以下任务但未成功：
+
+  <task_name>
+  {task_name}
+  </task_name>
+
+  <task_description>
+  {task_description}
+  </task_description>
+
+  请反思你的尝试，并为未来的重试提供简明的分析。
+
+  ## 出错原因
+  - **主要失败原因**：为什么你的尝试失败了？
+  - **你的尝试**：简要列出你使用的方法/途径
+  - **部分有效的内容**：任何值得保留的成功部分
+
+  ## 吸取的教训
+  - **关键洞察**：你从这次失败中学到了什么？
+  - **应避免的错误**：下次不应重复什么？
+
+  ## 重试策略
+  - **新方法**：你将如何以不同的方式处理此问题？
+  - **更好的工具/方法**：重试中应优先考虑什么？
+  - **成功检查点**：你如何知道自己取得了进展？
+
+# TASK_SUMMARY_SYSTEM_PROMPT: |
+#   Keep your response focused and actionable. This reflection will guide your next attempt.
+
+TASK_SUMMARY_USER_PROMPT: |
+  你是一名任务总结员。你的工作是总结指定任务的执行结果。总结应包括最终输出、结果以及在任务执行过程中生成或修改的任何文件。避免使用 markdown 等任何格式标记。
+
+  基于以下任务信息，请总结你在任务执行期间完成的工作：
+
+  <task_name>
+  {task_name}
+  </task_name>
+
+  <task_description>
+  {task_description}
+  </task_description>
+
+  请提供一份简明的总结，包括：
+  1. 你对任务的初始答案或解决方案
+  2. 执行期间创建、修改或生成的任何文件。如果没有创建文件，请跳过此点。
+  3. 产生的关键结果或输出
+  4. 完成任务所采取的重要步骤
+
+  专注于具体的交付物和成果。避免使用 markdown 等任何格式标记。

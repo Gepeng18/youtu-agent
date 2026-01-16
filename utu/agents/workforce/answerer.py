@@ -22,6 +22,10 @@ class AnswererAgent:
         self.llm = LLMAgent(model_config=config.workforce_answerer_model)
 
     # 从格式化的任务执行结果中提取最终答案
+    """
+    构建 prompts 调用 llm
+    1. answerer.yaml 的 FINAL_ANSWER_PROMPT 作为 user prompt
+    """
     async def extract_final_answer(self, recorder: WorkspaceTaskRecorder) -> str:
         # 从格式化的任务执行结果中提取最终答案
         """Extract the final answer from formatted task execution results."""
@@ -53,6 +57,10 @@ class AnswererAgent:
         return final_answer
 
     # 使用 LLM 检查模型回答与标准答案在语义上是否等效
+    """
+    构建 prompts 调用 llm
+    1. answerer.yaml 的 ANSWER_CHECK_PROMPT 作为 user prompt
+    """
     async def answer_check(self, question: str, model_answer: str, ground_truth: str) -> bool:
         # 使用 LLM 检查模型回答和标准答案是否在语义上等效
         """Check if model answer and ground truth are semantically equivalent using LLM."""

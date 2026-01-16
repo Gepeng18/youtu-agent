@@ -38,6 +38,12 @@ class ChainPlanner:
         self.additional_instructions = self.config.orchestrator_config.get("additional_instructions", "")
 
     # 处理输入内容并返回生成的计划
+    """
+    1. 调用 SimpleAgent 的 run_streamed 方法运行路由器
+    2. 路由器的输出结果如果以 <plan> 结尾，则创建计划
+        2.1 chain.yaml 的 orchestrator_sp 作为系统提示词
+        2.2 chain.yaml 的 orchestrator_up 作为用户提示词
+    """
     async def handle_input(self, recorder: Recorder) -> None | Plan:
         # 处理输入，返回一个计划
         # handle input. return a plan
@@ -62,6 +68,11 @@ class ChainPlanner:
             return await self.create_plan(recorder)
 
     # 根据总体任务和可用代理规划任务
+    """
+    构建 prompts 调用 llm
+    1. chain.yaml 的 orchestrator_sp 作为系统提示词
+    2. chain.yaml 的 orchestrator_up 作为用户提示词
+    """
     async def create_plan(self, recorder: Recorder) -> Plan:
         # 基于总体任务和可用代理规划任务
         """Plan tasks based on the overall task and available agents."""
@@ -144,7 +155,7 @@ class ChainPlanner:
         # 返回构建好的计划对象
         return Plan(input=recorder.input, analysis=analysis, tasks=tasks)
 
-    # 获取下一个待执行的任务
+    # 获取下一个待执行的任务，所有的任务都存储在 recorder 的 tasks 属性中
     async def get_next_task(self, recorder: Recorder) -> Task | None:
         # 获取下一个待执行的任务
         """Get the next task to be executed."""

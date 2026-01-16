@@ -30,6 +30,11 @@ class AssignerAgent:
         self.llm = LLMAgent(model_config=config.workforce_planner_model)
 
     # 将任务分配给具有最佳能力的工作者节点
+    """
+    构建 prompts 调用 llm
+    1. assigner.yaml 的 TASK_ASSIGN_SYS_PROMPT 作为 system prompt
+    2. assigner.yaml 的 TASK_ASSIGN_USER_PROMPT 作为 user prompt
+    """
     async def assign_task(self, recorder: WorkspaceTaskRecorder) -> Subtask:
         # 将任务分配给具有最佳能力的工作者节点
         """Assigns a task to a worker node with the best capability."""

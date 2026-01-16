@@ -27,6 +27,10 @@ class PlannerAgent:
         self.llm = LLMAgent(model_config=config.workforce_planner_model)
 
     # 根据总体任务和可用代理规划任务
+    """
+    构建 prompts 调用 llm
+    1. planner.yaml 的 TASK_PLAN_PROMPT 作为 user prompt
+    """
     async def plan_task(self, recorder: WorkspaceTaskRecorder) -> None:
         # 基于总体任务和可用代理规划任务
         """Plan tasks based on the overall task and available agents."""
@@ -55,6 +59,10 @@ class PlannerAgent:
         recorder.plan_init(tasks)
 
     # 根据已完成的任务更新任务计划
+    """
+    构建 prompts 调用 llm
+    1. planner.yaml 的 TASK_UPDATE_PLAN_PROMPT 作为 user prompt
+    """
     async def plan_update(self, recorder: WorkspaceTaskRecorder, task: Subtask) -> str:
         # 根据已完成的任务更新任务计划
         """Update the task plan based on completed tasks."""
@@ -148,6 +156,10 @@ class PlannerAgent:
         return choice, updated_tasks
 
     # 检查任务计划的执行状态
+    """
+    构建 prompts 调用 llm
+    1. planner.yaml 的 TASK_CHECK_PROMPT 作为 user prompt
+    """
     async def plan_check(self, recorder: WorkspaceTaskRecorder, task: Subtask) -> None:
         # 格式化任务检查提示词，包含总体任务、当前计划及最后一个任务的执行详情
         task_check_prompt = (

@@ -95,6 +95,10 @@ class OrchestratorAgent:
         return recorder
 
     # 启动流式处理，执行规划和任务执行流程
+    """
+    1. 调用 ChainPlanner 的 handle_input 方法生成规划
+    2. 循环判断是否还有下一个任务，有则执行，没有则执行完毕
+    """
     async def _start_streaming(self, recorder: Recorder):
         with trace(workflow_name=self.name, trace_id=recorder.trace_id):
             try:
@@ -130,6 +134,10 @@ class OrchestratorAgent:
                 recorder._is_complete = True
 
     # 执行单个任务
+    """
+    构建prompts，调用llm
+    chain.yaml 的 worker 作为 user prompt
+    """
     async def _run_task(self, recorder: Recorder, task: Task):
         # 获取对应的worker代理并构建
         worker = self.workers[task.agent_name]
