@@ -36,7 +36,7 @@ class WorkforceAgent:
     2. 分配阶段：调用 AssignerAgent.assign_task 分配下一步任务
     3. 执行阶段：调用 ExecutorAgent.execute_task 执行任务并检查/反思
     4. 检查阶段：调用 planner_agent.plan_check 检查任务完成情况
-    5. 更新阶段：调用 PlannerAgent.plan_update 视情况更新计划，并循环至第二步
+    5. 更新阶段：调用 PlannerAgent.plan_update 视情况更新计划【但看着好像是只判断是否已完成，别的都没有做】，并循环至第二步
     6. 回答阶段：调用 AnswererAgent.extract_final_answer 汇总最终答案
     """
     async def run(self, input: str, trace_id: str = None) -> WorkspaceTaskRecorder:
